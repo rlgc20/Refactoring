@@ -37,22 +37,40 @@ namespace Refactoring
                 double thisAmount = 0;
                 Rental each = rentals.Last();
 
-                //determine amount for each line
-                thisAmount = each.getCharge() ;
-
-                //add frequent render points
-                frequentRenterPoints += each.getFrequentRenterPoints();
-
                 //show figures for this rental
-                result += "\t" + each.getMovie().getTitle() + "\t" + thisAmount.ToString() + "\n";
+                result += "\t" + each.getMovie().getTitle() + "\t" + each.getCharge().ToString() + "\n";
                 totalAmount += thisAmount;
             }
 
             // add footer lines
-            result += "Amount owed is " + totalAmount.ToString() + "\n";
-            result += "You earned " + frequentRenterPoints.ToString() + " frequent renter points";
+            result += "Amount owed is " + getTotalCharge().ToString() + "\n";
+            result += "You earned " + getTotalFrequentRenderPoints().ToString() + " frequent renter points";
             return result;
         }
 
+        private double getTotalCharge()
+        {
+            double result = 0;
+            IEnumerable<Rental> rentals = _rentals.ToArray();
+            while(rentals.Count() > 0)
+            {
+                Rental each = rentals.Last();
+                result += each.getCharge();
+            }
+
+            return result;
+        }
+
+        private int getTotalFrequentRenderPoints()
+        {
+            int result = 0;
+            IEnumerable<Rental> rentals = _rentals.ToArray();
+            while (rentals.Count() > 0)
+            {
+                Rental each = rentals.Last();
+                result += each.getFrequentRenterPoints();
+            }
+            return result;
+        }
     }
 }
