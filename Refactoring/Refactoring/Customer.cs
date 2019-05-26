@@ -41,16 +41,14 @@ namespace Refactoring
                 thisAmount = each.getCharge() ;
 
                 //add frequent render points
-                frequentRenterPoints++;
-                //add bonus for a two day new release rental
-                if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1)
-                    frequentRenterPoints++;
+                frequentRenterPoints += each.getFrequentRenterPoints();
 
                 //show figures for this rental
                 result += "\t" + each.getMovie().getTitle() + "\t" + thisAmount.ToString() + "\n";
                 totalAmount += thisAmount;
             }
 
+            // add footer lines
             result += "Amount owed is " + totalAmount.ToString() + "\n";
             result += "You earned " + frequentRenterPoints.ToString() + " frequent renter points";
             return result;
