@@ -72,5 +72,26 @@ namespace Refactoring
             }
             return result;
         }
+
+        public string htmlStatement()
+        {
+            IEnumerable<Rental> rentals = _rentals.ToArray();
+            string result = "<H1>Rentals for <EM>" + getName() + "</EM></H1><P>\n";
+
+            while (rentals.Count() > 0)
+            {
+                Rental each = rentals.Last();
+                // show figures for each rental
+                result += each.getMovie().getTitle() + ": " +
+                          each.getCharge().ToString() + "<BR>\n";
+            }
+
+            // add footer lines
+            result += "<P>You owe <EM>" + getTotalCharge().ToString() + "</EM><P>\n";
+            result += "On this rental you earned <EM>" +
+                   getTotalFrequentRenderPoints().ToString() +
+                   "</EM> frequent renter points<P>";
+            return result;
+        }
     }
 }
